@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_06_215922) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_06_224228) do
   create_table "copies", force: :cascade do |t|
     t.integer "movie_id", null: false
     t.string "identification_code", null: false
@@ -30,10 +30,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_215922) do
 
   create_table "movies", force: :cascade do |t|
     t.string "title", null: false
-    t.string "genre"
+    t.string "genre", null: false
     t.float "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "year", null: false
+    t.index ["title", "year"], name: "index_movies_on_title_and_year", unique: true
   end
 
   create_table "rentals", force: :cascade do |t|
@@ -50,9 +52,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_215922) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_users_on_name"
   end
 
   add_foreign_key "copies", "movies"

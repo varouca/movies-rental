@@ -38,6 +38,7 @@ movies = [
 movies.each do |movie|
   Movie.create!(
     title: movie[:title], 
+    year: rand(1900..2021),
     genre: movie[:genre], 
     rating: rand(1.0..10.0).round(2)
   )
