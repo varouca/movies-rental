@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_03_183443) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_06_215922) do
+  create_table "copies", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.string "identification_code", null: false
+    t.integer "media", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_copies_on_movie_id"
+  end
+
   create_table "favorite_movies", id: false, force: :cascade do |t|
     t.integer "movie_id"
     t.integer "user_id"
@@ -23,18 +32,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_183443) do
     t.string "title", null: false
     t.string "genre"
     t.float "rating"
-    t.integer "available_copies", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "rentals", force: :cascade do |t|
-    t.integer "movie_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["movie_id"], name: "index_rentals_on_movie_id"
-    t.index ["user_id", "movie_id"], name: "index_rentals_on_user_id_and_movie_id", unique: true
+    t.date "checkout_date", null: false
+    t.date "due_date", null: false
+    t.date "returned_date"
+    t.integer "copy_id"
+    t.index ["copy_id"], name: "index_rentals_on_copy_id"
+    t.index ["user_id", "copy_id"], name: "index_rentals_on_user_id_and_copy_id"
     t.index ["user_id"], name: "index_rentals_on_user_id"
   end
 
@@ -44,8 +55,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_183443) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "copies", "movies"
   add_foreign_key "favorite_movies", "movies"
   add_foreign_key "favorite_movies", "users"
-  add_foreign_key "rentals", "movies"
+  add_foreign_key "rentals", "copies"
   add_foreign_key "rentals", "users"
 end

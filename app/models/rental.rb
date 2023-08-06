@@ -1,4 +1,7 @@
-class Rental < ApplicationRecord
+class Rental < ApplicationRecord   
     belongs_to :user
     belongs_to :movie
-  end
+
+    validates :checkout_date, presence: true
+    validates :due_date, presence: true
+end
