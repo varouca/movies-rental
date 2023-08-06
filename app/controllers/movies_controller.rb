@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   def index
     @movies = Movie.all
-    render json: @movies
+    render json: @movies, except: [:created_at, :updated_at]
   end
 
   def recommendations
@@ -23,4 +23,5 @@ class MoviesController < ApplicationController
     user.rented << movie
     render json: movie
   end
+
 end
