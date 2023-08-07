@@ -18,7 +18,7 @@ class Api::V1::MoviesController < ApplicationController
 
   def recommendations
     favorite_movies = User.find(params[:user_id]).favorites
-    @recommendations = RecommendationEngine.new(favorite_movies).recommendations
+    @recommendations = RecommendationEngine.recommendations(favorite_movies)
     render json: @recommendations, except: [:created_at, :updated_at]
   end
 end
