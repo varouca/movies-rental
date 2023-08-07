@@ -1,0 +1,10 @@
+one:
+  title: Movie One
+  year: 2022
+  rating: 8.5
+  genre: action
+two:
+  title: Movie Two
+  year: 2019
+  rating: 7.9
+  genre: action

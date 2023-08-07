@@ -5,4 +5,6 @@ class Copy < ApplicationRecord
 
   has_many :rentals
   belongs_to :movie
+
+  validates :identification_code, presence: true, uniqueness: true
 end
