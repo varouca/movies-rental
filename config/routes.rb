@@ -9,7 +9,8 @@ Rails.application.routes.draw do
         get :search, on: :collection
       end
 
-      resources :rentals, only: %i[create] do
+      resources :rentals, only: [] do
+        post :rent, on: :collection
         put :bring_back, on: :member
         get :history_by_user, on: :collection
         get :active_by_user, on: :collection

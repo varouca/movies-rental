@@ -1,11 +1,10 @@
-# test/controllers/api/v1/rentals_controller_test.rb
 require 'test_helper'
 
 class Api::V1::RentalsControllerTest < ActionController::TestCase
   fixtures :users, :movies, :copies, :rentals
 
   test 'should return an error if no copies available' do
-    post :create, params: { user_id: users(:one).id, movie_id:  movies(:one).id, media: 'vhs' }, format: :json
+    post :rent, params: { user_id: users(:one).id, movie_id:  movies(:one).id, media: 'vhs' }, format: :json
 
     assert_response :not_found
     error_response = JSON.parse(response.body)
