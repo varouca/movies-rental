@@ -1,17 +1,19 @@
-
 class Api::V1::MoviesController < ApplicationController
   def index
-    @movies = Movie.all
-                    .includes(:copies)
-                    .paginate(page: params[:page], per_page: 10)
-    render json: @movies, except: [:created_at, :updated_at]
+    movies = Movie.all.paginate(page: params[:page], per_page: 10)
+    render json: movies, except: [:created_at, :updated_at]
   end
 
   def search
-    @movies = Movie.where("title LIKE ?", "%#{params[:q]}%")
-                    .includes(:copies)
-                    .paginate(page: params[:page], per_page: 10)
-    render json: @movies.as_json(include: { copy: { only: [:id, :media] } }, except: [:created_at, :updated_at])
+    @movies = Movie.where("title LIKE ?", "%#{params[:q]}%").paginate(page: params[:page], per_page: 10)
+    render json: @movies, except: [:created_at, :updated_at]
+  end
+
+  def availability
+    movie_id = params[:id]
+    @copies = Copy.includes(:rentals).where(movie_id: movie_id)
+                    
+    render json: @copies.as_json(include: { rentals: { only: [:due_date] } }, except: [:id, :created_at, :updated_at])
   end
 
   def recommendations
