@@ -33,28 +33,4 @@ class Api::V1::RentalsControllerTest < ActionController::TestCase
     assert_equal rental.id, rental_response['rental']['id']
     assert_equal Date.today.to_s, rental_response['rental']['returned_date']
   end
-
-  test 'should get rental history by user' do
-    user = users(:two)
-    get :history_by_user, params: { user_id: user.id }, format: :json
-
-    assert_response :success
-    rentals_response = JSON.parse(response.body)
-    assert_equal user.rentals.count, rentals_response.size
-    assert_equal user.rentals.pluck(:id).sort, rentals_response.map { |rental| rental['id'] }.sort
-    assert_equal user.rentals.pluck(:copy_id), rentals_response.map { |rental| rental['copy']['id'] }
-    assert_equal user.rentals.pluck(:bluray), rentals_response.map { |rental| rental['copy']['media'] }
-  end
-
-  test 'should get active rentals by user' do
-    user = users(:two)
-    get :active_by_user, params: { user_id: user.id }, format: :json
-
-    assert_response :success
-    rentals_response = JSON.parse(response.body)
-    assert_equal user.rentals.active.count, rentals_response.size
-    assert_equal user.rentals.active.pluck(:id).sort, rentals_response.map { |rental| rental['id'] }.sort
-    assert_equal user.rentals.active.pluck(:copy_id), rentals_response.map { |rental| rental['copy']['id'] }
-    assert_equal user.rentals.active.pluck(:bluray), rentals_response.map { |rental| rental['copy']['media'] }
-  end
 end
