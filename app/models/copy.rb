@@ -5,4 +5,4 @@ class Copy < ApplicationRecord
 
   has_many :rentals
   belongs_to :movie
-
+end
