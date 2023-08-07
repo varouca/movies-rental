@@ -38,10 +38,17 @@ movies = [
 movies.each do |movie|
   Movie.create!(
     title: movie[:title], 
+    year: rand(1900..2021),
     genre: movie[:genre], 
-    rating: rand(1.0..10.0).round(2), 
-    available_copies: rand(1..10)
+    rating: rand(1.0..10.0).round(2)
   )
+
+  rand(1..10).times do
+    Movie.last.copies.create!(
+      identification_code: SecureRandom.hex(5),
+      media: rand(0..3)
+    )
+  end
 end
   
 User.all.each do |user|

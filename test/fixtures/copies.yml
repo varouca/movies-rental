@@ -1,0 +1,8 @@
+one:
+  media: dvd
+  movie: one
+  identification_code: 123456780
+two:
+  media: bluray
+  movie: one
+  identification_code: 123456789
